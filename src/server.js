@@ -22,10 +22,15 @@ const io = socketIO.listen(server);
 
 let sockets = [];
 
+//채팅발신, nickname
+
 io.on("connection", (socket) => {
-sockets.push(socket.id);
-console.log("Somebody Conncected");
-//socket: request object{ }
+ socket.on("newMessage", ( { message }) => {
+     socket.broadcast.emit("messageNotif", { message, nickname: socket.nickname || "익명" });
+ });
+ socket.on("setNickname", ({ nickname }) => {
+     socket.nickname = nickname;  
+ })
 });
 
-setInterval( () => console.log(sockets), 1000);
+
