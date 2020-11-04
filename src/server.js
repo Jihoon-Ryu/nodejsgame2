@@ -1,7 +1,8 @@
 import { join } from "path"
 import express from "express";
 import socketIO from "socket.io";
-
+import socketController from "./socketController";
+import events from "./events";
 import logger from "morgan";
 
 const PORT = 4000;
@@ -11,7 +12,7 @@ app.set("views", join(__dirname, "views"));
 app.use(logger("dev"));
 app.use(express.static(join(__dirname, "static")));
 
-app.get("/", (req, res) => res.render("home"));
+app.get("/", (req, res) => res.render("home", { events: JSON.stringify(events) }));
 
 const handleListening = () => {
  console.log (`✅ Server running: http://localhost:${PORT}`)
@@ -22,15 +23,6 @@ const io = socketIO.listen(server);
 
 let sockets = [];
 
-//채팅발신, nickname
-
-io.on("connection", (socket) => {
- socket.on("newMessage", ( { message }) => {
-     socket.broadcast.emit("messageNotif", { message, nickname: socket.nickname || "익명" });
- });
- socket.on("setNickname", ({ nickname }) => {
-     socket.nickname = nickname;  
- })
-});
+io.on("connection", socket => socketController(socket));
 
 

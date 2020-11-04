@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "nodemon --exec babel-node src/server.js --delay 2",
-    "build:styles": "gulp styles"
+    "dev:server": "nodemon --exec babel-node src/server.js --delay 2 --ignore assets/ --ignore rc/static",
+    "dev:assets": "gulp"
   },
   "repository": {
     "type": "git",
@@ -26,10 +26,15 @@
     "@babel/node": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
+    "babelify": "^10.0.0",
     "core-js": "^3.6.5",
+    "del": "^6.0.0",
     "eslint-config-prettier": "^6.15.0",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-csso": "^4.0.1",
     "gulp-sass": "^4.1.0",
     "morgan": "^1.10.0",
     "node-sass": "^5.0.0",
