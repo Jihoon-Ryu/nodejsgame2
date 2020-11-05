@@ -2,6 +2,9 @@
 @import "variables";
 @import "reset";
 @import "login";
+@import "chat";
+@import "notifications";
+@import "game";
 
 * {
   box-sizing: border-box;
@@ -34,7 +37,7 @@ body {
   }
   &.loggedIn {
     .gameContainer {
-      display: block;
+      display: flex;
     }
   }
 }

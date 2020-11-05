@@ -1,6 +1,8 @@
 import "./login";
 import "./notifications";
 import "./sockets";
+import "./chat";
+import "./paint";
 
 /* 1~3챕터까지의 내용
 const socket = io("/");
