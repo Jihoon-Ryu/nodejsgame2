@@ -1,7 +1,7 @@
 import { handleNewUser, handleDisconnected } from "./notifications";
 import { handleNewMessage } from "./chat";
 import { handleBeganPath, handleStrokedPath, handleFilled } from "./paint";
-
+import { handlePlayerUpdate, handleGameStarted, handleLeaderNotif, handleGameEnded, handleGameStarting } from "./players";
 /*
 let socket = null;
 
@@ -36,4 +36,19 @@ export const initSockets = () => {
  window.socket.on(window.events.strokedPath, handleStrokedPath);
  //그림판-채우기색
  window.socket.on(window.events.filled, handleFilled);
+
+ //유저정보 업데이트
+ window.socket.on(window.events.playerUpdate, handlePlayerUpdate);
+
+ //게임시작 
+ window.socket.on(window.events.gameStarted, handleGameStarted);
+
+ //"게임이 곧 시작"
+ window.socket.on(window.events.gameStarting, handleGameStarting);
+
+ //리더
+ window.socket.on(window.events.leaderNotif, handleLeaderNotif);
+
+ //게임 끝
+ window.socket.on(window.events.gameEnded, handleGameEnded);
 }; 
