@@ -22,6 +22,7 @@ const socketController = socket => {
 let inProgress = false;
 let word = null;
 let leader = null;
+let timeout = null;
 let sockets = [];
 //setNickname~in, disconncect~out
 
@@ -32,7 +33,8 @@ const chooseLeader = () => sockets[Math.floor(Math.random() * sockets.length)];
 const socketController = (socket, io) => {
 
  const startGame = () => {
-  if (inProgress === false){
+  if(sockets.length > 1){ 
+   if (inProgress === false){
     //game is on
     inProgress = true;
     //leader, word 결정
@@ -44,13 +46,20 @@ const socketController = (socket, io) => {
       io.emit(events.gameStarted);
       //리더에게 word알리고 그리기 활성화
       io.to(leader.id).emit(events.leaderNotif, { word });      
-  }, 3000);
- } };
+      timeout = setTimeout(endGame, 10000);
+      }, 3000);
+ } 
+} 
+};
 
  const endGame = () => {
   inProgress = false;
   io.emit(events.gameEnded);
- }
+  if(timeout !== null){
+    clearTimeout(timeout);
+  }
+  setTimeout(() => startGame(), 3000);
+}
 
  const addPoints = (id) => {
   sockets = sockets.map(sockets_ele => {
@@ -73,7 +82,7 @@ const socketController = (socket, io) => {
      //sockets.js로 broadcast: newUser이벤트, nickname보냄 
      io.emit(events.playerUpdate, { sockets });
      //유저 정보 업데이트    
-     if (sockets.length === 2) { startGame(); } 
+     startGame(); 
      //인원이 2명 이상이면 게임 시작
     });
     

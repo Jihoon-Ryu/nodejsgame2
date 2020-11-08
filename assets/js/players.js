@@ -1,8 +1,24 @@
-import { disableChat } from "./chat";
+import { disableChat, enableChat } from "./chat";
 import { disableCanvas, enableCanvas, hideControls, showControls, resetCanvas } from "./paint";
 
 const board = document.getElementById("jsPBoard");
 const notifs = document.getElementById("jsNotifs");
+const countdownNo = document.getElementById("countdown");
+
+const countdown = () => {
+    let count = 10;
+    let down;
+    down = setInterval(() => {
+        count = count -1;
+        countdownNo.innerHTML = count;
+        if(count <= 0) {
+            clearInterval(down);  
+            countdownNo.innerHTML = "";  
+    } 
+    }, 1000);
+}
+
+
 
 const addPlayers = (sockets) => {
     board.innerHTML = "";
@@ -21,14 +37,20 @@ const setNotifis = (text) => {
 }
 
 export const handlePlayerUpdate = ({sockets}) => addPlayers(sockets);
+
+//먼저
 export const handleGameStarted = () => {
     //알림(You are a leader, paint: )초기화
     setNotifis("");
     //일반유저 그리기 못하게 하기
     disableCanvas();
     hideControls();
+    //전에 리더였던 사람 채팅활성화
+    enableChat();
+    //남은 시간 카운트다운
+    countdown();
 };
-
+//나중
 export const handleLeaderNotif = ({word}) => {
     //리더는 그리기 가능하게
     enableCanvas();

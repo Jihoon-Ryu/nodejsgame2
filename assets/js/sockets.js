@@ -40,11 +40,11 @@ export const initSockets = () => {
  //유저정보 업데이트
  window.socket.on(window.events.playerUpdate, handlePlayerUpdate);
 
- //게임시작 
- window.socket.on(window.events.gameStarted, handleGameStarted);
-
  //"게임이 곧 시작"
  window.socket.on(window.events.gameStarting, handleGameStarting);
+
+ //게임시작 
+ window.socket.on(window.events.gameStarted, handleGameStarted);
 
  //리더
  window.socket.on(window.events.leaderNotif, handleLeaderNotif);
